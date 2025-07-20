@@ -1,0 +1,118 @@
+*, *::after, *::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+main {
+    width: 100dvw;
+    height: 100dvh;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#animScreen {
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    /* border: 1px solid red; */
+    overflow: hidden;
+    padding: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+h1 {
+    color: white;
+    font-size: 2rem;
+    text-shadow: 0 0 5px black;
+}
+
+h2 {
+    color: coral;
+    margin: 1rem 0;
+    font-size: 3rem;
+    text-shadow: 0 0 5px black;
+}
+
+p {
+    font-weight: 500;
+    color: white;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    line-height: 1.5rem;
+    text-shadow: 0 0 10px black;
+}
+
+.screenOption {
+    width: calc(100% / 8);
+    aspect-ratio: 2/3;
+    border-radius: 1rem;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    transition: all 0.5s linear;
+    position: absolute;
+    bottom: 1rem;
+    left: calc(50% + (var(--index) - 1 ) * (calc(100% / 8) + 1rem));
+    z-index: 2;
+}
+
+
+@keyframes animOne {
+
+    2%{
+        aspect-ratio: 3/2;
+        z-index: 1;
+    }
+
+    50% {
+        width: 50%;
+        height: 50%;
+        bottom: 50%;
+        left: 50%;
+        transform: translate(-50%, 50%);
+        border-radius: 0;
+        z-index: 1;
+    } 
+
+    100% {
+        width: 100%;
+        height: 100%; 
+        bottom: 0;
+        left: 0;
+        border-radius: 0;
+        z-index: 1;
+    }
+}
+
+@keyframes textDisappear {
+    from {opacity: 1;}
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {opacity: 0}
+}
+
+@keyframes textAppear {
+    from {
+        opacity: 0;
+        transform: translateY(60%);
+    }
+   
+    50% {
+        opacity: 0.8;
+        transform: translateY(30%);
+        filter: blur(5px);
+    }
+
+    /* 80%{filter: blur(5px)} */
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
