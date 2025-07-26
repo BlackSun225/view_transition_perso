@@ -58,6 +58,7 @@ p {
     bottom: 1rem;
     left: calc(50% + (var(--index) - 1 ) * (calc(100% / 8) + 1rem));
     z-index: 2;
+    cursor: pointer;
 }
 
 
