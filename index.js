@@ -51,7 +51,6 @@ p.textContent = data[index].desc;
 
 
 function createScreenOption(indexOfHTMLElement, indexOfDataObjectToShow) {
-    // console.log("Adding new element to DOM");
     let span = document.createElement("span");
     span.style.setProperty("--index", indexOfHTMLElement.toString());
     span.className = "screenOption";
@@ -60,24 +59,21 @@ function createScreenOption(indexOfHTMLElement, indexOfDataObjectToShow) {
     span.setAttribute("data-src", data[indexOfDataObjectToShow].img);
 
     span.style.backgroundImage = `url(${data[indexOfDataObjectToShow].img})`;
-    // console.log("New element added to DOM");
     return span;   
 }
 
 function listenerForScreenOptionItem(event) {
+    let indexOfDataObjectUsedForLastOptionItem = data.indexOf(data.find(elem => elem.img == screenOptionList[screenOptionList.length - 1].getAttribute("data-src")));
     let selectedDataObjectIndex = data.indexOf(data.find(elem => elem.img == event.target.getAttribute("data-src")));
     let clickedElementIndex = event.target.getAttribute("data-index")
     let indexRangeToMove = [];
 
-    if(clickedElementIndex <= 4) {
+    if(clickedElementIndex < 4) {
         for (let y = parseInt(event.target.getAttribute("data-index")) + 1; y < screenOptionList.length + 1; y++) {
             indexRangeToMove.push(y);
         }
     }
-    
 
-    console.log("indexRangeToMove : ", indexRangeToMove);
-    console.log("clickedElementIndex : ", clickedElementIndex);
     
     event.target.style.animation = "0.8s linear animOne";
     event.target.style.animationFillMode = "forwards";
@@ -93,13 +89,10 @@ function listenerForScreenOptionItem(event) {
         p.textContent = data[selectedDataObjectIndex].desc;
 
         setTimeout(() => {
-            event.target.remove();
-            newOptionIndex = parseInt(screenOptionList[screenOptionList.length - 1].getAttribute("data-index")) + 1;
-            let dataOfLastElementOfScreenOptionList = data.find(elem => elem.img == screenOptionList[screenOptionList.length - 1].getAttribute("data-src"));
-            indexOfDataObjectUsedForLastOptionItem = data.indexOf(dataOfLastElementOfScreenOptionList);
+            event.target.remove(); //remove the clicked element
+            screenOptionList = Array.from(animScreen.querySelectorAll(".screenOption")); //redefine screenOptionList after remove
 
-            console.log("newOptionItemIndex : ", newOptionIndex);
-            console.log("indexOfDataObjectUsedForLastOptionItem : ", indexOfDataObjectUsedForLastOptionItem);
+            newOptionIndex = screenOptionList.length + 1; //calc the index of the new element to create: screenOptionList.length + the number of removed element;
 
             if(indexOfDataObjectUsedForLastOptionItem == data.length - 1) {
                 indexOfDataObjectUsedForLastOptionItem = -1; //to return to the first dataObject when the last has been used;
@@ -107,14 +100,9 @@ function listenerForScreenOptionItem(event) {
 
             let newOptionItem = createScreenOption(newOptionIndex, indexOfDataObjectUsedForLastOptionItem + 1);
             newOptionItem.addEventListener("click", listenerForScreenOptionItem);
-            // console.log("newOptionItem : ", newOptionItem);
-            // console.log("event added to new element");
 
             animScreen.appendChild(newOptionItem);
-            // console.log("element added as child to animscreen");
             screenOptionList = Array.from(animScreen.querySelectorAll(".screenOption"));
-
-            // console.log("screenOptionList: ", screenOptionList);
 
             [h1, h2, p].forEach(element => {
                 element.style.animation = "0.5s linear textAppear";
@@ -124,7 +112,7 @@ function listenerForScreenOptionItem(event) {
         }, 1);
     }, 800);
 
-    if(clickedElementIndex <= 4) {
+    if(clickedElementIndex < 4) {
         indexRangeToMove.forEach(dataIndex => {
             animScreen.querySelector(`.screenOption[data-index='${dataIndex}']`).style.left= `calc(50% + ${dataIndex - 2} * (calc(100% / 8) + 1rem))`;
             animScreen.querySelector(`.screenOption[data-index='${dataIndex}']`).setAttribute("data-index", `${dataIndex - 1}`);
@@ -136,7 +124,6 @@ screenOptionList.forEach((elem, i) => {
     elem.setAttribute("data-index", `${i + 1}`);
     elem.style.backgroundImage = `url(${data[i + 1].img})`;
     elem.setAttribute("data-src", data[i + 1].img);
-
 
     elem.addEventListener("click", listenerForScreenOptionItem);
 });
