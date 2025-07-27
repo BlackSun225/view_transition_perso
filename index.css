@@ -63,13 +63,10 @@ p {
 
 
 @keyframes animOne {
-
     5%{
-        width: 5%;
-        height: 5%;
-        left: 50%;
-        bottom: 10%;
-        aspect-ratio: 3/2;
+        width: 18dvw;
+        height: 18dvw;
+        aspect-ratio: 1;
         z-index: 1;
     }
 
@@ -82,6 +79,7 @@ p {
         z-index: 1;
     }
 }
+
 
 @keyframes textDisappear {
     from {opacity: 1;}
