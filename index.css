@@ -91,6 +91,7 @@ p {
     100% {opacity: 0}
 }
 
+
 @keyframes textAppear {
     from {
         opacity: 0;
